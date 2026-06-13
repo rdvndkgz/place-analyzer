@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { db } = require('../database');
+const { pool } = require('../database');
 const { authMiddleware } = require('../middleware/auth');
 
 router.get('/analyze/:venueId', authMiddleware, async (req, res) => {
-  const venue = db.prepare('SELECT * FROM venues WHERE id = ?').get(req.params.venueId);
+  const venueResult = await pool.query('SELECT * FROM venues WHERE id = $1', [req.params.venueId]);
+  const venue = venueResult.rows[0];
   if (!venue) return res.status(404).json({ error: 'Mekan bulunamadı' });
 
-  const reviews = db.prepare('SELECT * FROM reviews WHERE venue_id = ?').all(req.params.venueId);
+  const reviewsResult = await pool.query('SELECT * FROM reviews WHERE venue_id = $1', [req.params.venueId]);
+  const reviews = reviewsResult.rows;
   if (reviews.length === 0)
     return res.status(400).json({ error: 'Henüz yorum yok, analiz yapılamaz' });
 
