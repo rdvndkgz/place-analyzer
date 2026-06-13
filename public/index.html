@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Place Analyzer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- AUTH EKRANI -->
+    <div id="auth-screen">
+      <div class="auth-box">
+        <h1>🗺️ Place Analyzer</h1>
+        <div class="tab-buttons">
+          <button id="tab-login" class="tab-btn active" onclick="showTab('login')">Giriş Yap</button>
+          <button id="tab-signup" class="tab-btn" onclick="showTab('signup')">Kayıt Ol</button>
+        </div>
+
+        <!-- GİRİŞ -->
+        <div id="login-form">
+          <input type="email" id="login-email" placeholder="E-posta" />
+          <input type="password" id="login-password" placeholder="Şifre" />
+          <button onclick="login()">Giriş Yap</button>
+          <p id="login-error" class="error"></p>
+        </div>
+
+        <!-- KAYIT -->
+        <div id="signup-form" style="display:none">
+          <input type="text" id="signup-name" placeholder="Ad Soyad" />
+          <input type="email" id="signup-email" placeholder="E-posta" />
+          <input type="password" id="signup-password" placeholder="Şifre" />
+          <button onclick="signup()">Kayıt Ol</button>
+          <p id="signup-error" class="error"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANA EKRAN -->
+    <div id="main-screen" style="display:none">
+      <header>
+        <h1>🗺️ Mekan Yorumla</h1>
+        <div class="header-right">
+          <span id="user-name"></span>
+          <button onclick="logout()" class="logout-btn">Çıkış</button>
+        </div>
+      </header>
+
+      <div class="container">
+        <!-- MEKAN EKLE -->
+        <div class="card">
+          <h2>Mekan Ekle</h2>
+          <div class="inline-form">
+            <input type="text" id="venue-name-input" placeholder="Mekan adı girin..." />
+            <button onclick="addVenue()">Ekle</button>
+          </div>
+          <p id="venue-msg" class="msg"></p>
+        </div>
+
+        <!-- MEKANLAR LİSTESİ -->
+        <div class="card">
+          <h2>Mekanlar</h2>
+          <div id="venues-list"></div>
+        </div>
+
+        <!-- YORUM ALANI -->
+        <div class="card" id="review-section" style="display:none">
+          <h2>📍 <span id="selected-venue-name"></span></h2>
+
+          <div class="tabs">
+            <button class="tab-btn active" onclick="switchReviewTab('reviews')">Yorumlar</button>
+            <button class="tab-btn" onclick="switchReviewTab('add')">Yorum Ekle</button>
+            <button class="tab-btn ai-btn" onclick="switchReviewTab('ai')">🤖 AI Analiz</button>
+          </div>
+
+          <!-- YORUMLAR -->
+          <div id="reviews-tab">
+            <div id="reviews-list"></div>
+          </div>
+
+          <!-- YORUM EKLE -->
+          <div id="add-tab" style="display:none">
+            <div class="score-group">
+              <label>Fiyat <span id="price-val">5</span>/10</label>
+              <input type="range" min="1" max="10" value="5" oninput="updateVal('price-val', this.value)" id="price-score" />
+            </div>
+            <div class="score-group">
+              <label>Lokasyon <span id="loc-val">5</span>/10</label>
+              <input type="range" min="1" max="10" value="5" oninput="updateVal('loc-val', this.value)" id="loc-score" />
+            </div>
+            <div class="score-group">
+              <label>Hizmet <span id="svc-val">5</span>/10</label>
+              <input type="range" min="1" max="10" value="5" oninput="updateVal('svc-val', this.value)" id="svc-score" />
+            </div>
+            <textarea id="review-comment" placeholder="Yorumunuzu yazın..." rows="4"></textarea>
+            <button onclick="addReview()">Yorumu Gönder</button>
+            <p id="review-msg" class="msg"></p>
+          </div>
+
+          <!-- AI ANALİZ -->
+          <div id="ai-tab" style="display:none">
+            <div id="ai-result">
+              <button onclick="getAIAnalysis()" class="ai-analyze-btn">🤖 Analizi Başlat</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
