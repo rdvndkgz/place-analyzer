@@ -227,7 +227,7 @@ async function getAIAnalysis() {
 
   box.innerHTML = `
     <div class="ai-result-box">
-      <h3>🤖 AI Analizi — ${data.venue}</h3>
+      <h3>🤖 AI Analizi — ${data.venue} ${data.source === 'web' ? '<span style="font-size:0.75rem;color:#888;">(web kaynaklı)</span>' : ''}</h3>
       <div class="ai-scores">
         <div class="ai-score-item">
           <div class="label">💰 Fiyat</div>
